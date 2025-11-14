@@ -1,12 +1,12 @@
 <template>
   <div class="admin">
     <div class="admin-header">
-      <h2>Admin Panel - Plugin Management</h2>
+      <h2>{{ t('admin.title') }} - {{ t('admin.pluginManagement') }}</h2>
       <p v-if="!isAdmin" class="error-message">Only admins can access this page</p>
     </div>
 
     <div class="plugins-section" v-if="isAdmin">
-      <h3>Available Plugins</h3>
+      <h3>{{ t('home.plugins') }}</h3>
       <div class="plugins-list">
         <div class="plugin-item" v-for="plugin in allPlugins" :key="plugin.id">
           <div class="plugin-info">
@@ -31,13 +31,20 @@
 </template>
 
 <script setup lang="ts">
+// 组件名称
+defineOptions({
+  name: 'AdminPage'
+})
+
 import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { usePluginStore } from '@/stores/plugin'
+import { useTranslation } from '@/composables/useTranslation'
 import { NSwitch } from 'naive-ui'
 
 const userStore = useUserStore()
 const pluginStore = usePluginStore()
+const { t } = useTranslation()
 
 const isAdmin = computed(() => userStore.isAdmin)
 const allPlugins = computed(() => pluginStore.getAllPlugins())
@@ -62,12 +69,13 @@ const togglePlugin = (pluginId: string, enabled: boolean) => {
 
 .admin-header h2 {
   margin: 0 0 16px 0;
-  color: #333;
+  color: var(--text-color);
 }
 
 .admin-header p {
   margin: 0;
-  color: #666;
+  color: var(--text-color);
+  opacity: 0.8;
 }
 
 .error-message {
@@ -77,7 +85,7 @@ const togglePlugin = (pluginId: string, enabled: boolean) => {
 
 .plugins-section h3 {
   margin: 0 0 20px 0;
-  color: #333;
+  color: var(--text-color);
 }
 
 .plugins-list {
@@ -87,7 +95,7 @@ const togglePlugin = (pluginId: string, enabled: boolean) => {
 }
 
 .plugin-item {
-  background: white;
+  background: var(--card-bg);
   border-radius: 8px;
   padding: 16px;
   display: flex;
@@ -115,17 +123,19 @@ const togglePlugin = (pluginId: string, enabled: boolean) => {
 
 .plugin-details h4 {
   margin: 0 0 8px 0;
-  color: #333;
+  color: var(--text-color);
 }
 
 .plugin-details p {
   margin: 0 0 8px 0;
-  color: #666;
+  color: var(--text-color);
+  opacity: 0.7;
   font-size: 14px;
 }
 
 .plugin-details small {
-  color: #999;
+  color: var(--text-color);
+  opacity: 0.5;
   font-size: 12px;
 }
 
