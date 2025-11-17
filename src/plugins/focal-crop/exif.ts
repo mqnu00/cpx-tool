@@ -112,12 +112,14 @@ function parseExifData(
           break
           
         case 0x920a: // Focal Length
-          const numerator = view.getUint32(valueOffset, littleEndian)
-          const denominator = view.getUint32(valueOffset + 4, littleEndian)
-          if (denominator !== 0) {
-            exifData.focalLength = Math.round((numerator / denominator) * 10) / 10
+          {
+            const numerator = view.getUint32(valueOffset, littleEndian)
+            const denominator = view.getUint32(valueOffset + 4, littleEndian)
+            if (denominator !== 0) {
+              exifData.focalLength = Math.round((numerator / denominator) * 10) / 10
+            }
+            break
           }
-          break
           
         case 0x9201: // Shutter Speed
           value = readRational(view, valueOffset, littleEndian)
